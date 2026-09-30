@@ -2,7 +2,6 @@
 
 require "runapi/core"
 require_relative "qwen_3/types"
-require_relative "qwen_3/contract_gen"
 require_relative "qwen_3/resources/text_to_image"
 require_relative "qwen_3/resources/edit_image"
 require_relative "qwen_3/client"

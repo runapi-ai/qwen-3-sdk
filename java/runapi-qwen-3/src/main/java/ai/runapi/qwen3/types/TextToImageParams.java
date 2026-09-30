@@ -18,8 +18,8 @@ public final class TextToImageParams {
   private final String callbackUrl;
 
   private TextToImageParams(Builder builder) {
-    this.model = Qwen3ParamUtils.requireNonBlankTrim(builder.model, "model");
-    this.prompt = Qwen3ParamUtils.requireNonBlank(builder.prompt, "prompt");
+    this.model = builder.model;
+    this.prompt = builder.prompt;
     this.outputResolution = builder.outputResolution;
     this.aspectRatio = builder.aspectRatio;
     this.outputFormat = builder.outputFormat;
@@ -81,32 +81,32 @@ public final class TextToImageParams {
 
     /** Sets the model slug using a string value. */
     public Builder model(String value) {
-      this.model = Qwen3ParamUtils.requireNonBlankTrim(value, "model");
+      this.model = value;
       return this;
     }
 
 
     /** Sets the text prompt. */
     public Builder prompt(String value) {
-      this.prompt = Qwen3ParamUtils.requireNonBlank(value, "prompt");
+      this.prompt = value;
       return this;
     }
 
     /** Sets the output resolution. */
     public Builder outputResolution(String value) {
-      this.outputResolution = Qwen3ParamUtils.requireNonBlank(value, "outputResolution");
+      this.outputResolution = value;
       return this;
     }
 
     /** Sets the output aspect ratio. */
     public Builder aspectRatio(String value) {
-      this.aspectRatio = Qwen3ParamUtils.requireNonBlank(value, "aspectRatio");
+      this.aspectRatio = value;
       return this;
     }
 
     /** Sets the output format. */
     public Builder outputFormat(String value) {
-      this.outputFormat = Qwen3ParamUtils.requireNonBlank(value, "outputFormat");
+      this.outputFormat = value;
       return this;
     }
 
@@ -124,7 +124,7 @@ public final class TextToImageParams {
 
     /** Sets the negative prompt describing what to avoid. */
     public Builder negativePrompt(String value) {
-      this.negativePrompt = Qwen3ParamUtils.requireNonBlank(value, "negativePrompt");
+      this.negativePrompt = value;
       return this;
     }
 
@@ -136,7 +136,7 @@ public final class TextToImageParams {
 
     /** Sets the webhook URL for task completion notifications. */
     public Builder callbackUrl(String value) {
-      this.callbackUrl = Qwen3ParamUtils.requireNonBlank(value, "callbackUrl");
+      this.callbackUrl = value;
       return this;
     }
 

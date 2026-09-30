@@ -1,7 +1,7 @@
 import pytest
 
 from runapi.core import config
-from runapi.core.errors import AuthenticationError, ValidationError
+from runapi.core.errors import AuthenticationError
 from runapi.qwen_3 import Qwen3Client
 from runapi.qwen_3.resources.edit_image import EditImage
 from runapi.qwen_3.resources.text_to_image import TextToImage
@@ -119,41 +119,3 @@ def test_run_narrows_completed_type():
     result = client.text_to_image.run(model="qwen-3-text-to-image", prompt="a serene lake")
     assert isinstance(result, CompletedTextToImageResponse)
     assert result.images[0].url == "https://x/y.png"
-
-
-# --- validation -----------------------------------------------------------
-
-
-def test_rejects_unknown_model():
-    client = Qwen3Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="model must be one of"):
-        client.text_to_image.create(model="nope", prompt="hi there")
-
-
-def test_requires_prompt():
-    client = Qwen3Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="prompt is required"):
-        client.text_to_image.create(model="qwen-3-text-to-image")
-
-
-def test_text_to_image_rejects_bad_aspect_ratio():
-    client = Qwen3Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="aspect_ratio"):
-        client.text_to_image.create(model="qwen-3-text-to-image", prompt="hi there", aspect_ratio="5:1")
-
-
-def test_edit_image_requires_source_image_urls():
-    client = Qwen3Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="source_image_urls is required"):
-        client.edit_image.create(model="qwen-3-edit-image", prompt="make it pop")
-
-
-def test_rejects_bad_output_format():
-    client = Qwen3Client(api_key="k", http_client=FakeHttp())
-    with pytest.raises(ValidationError, match="output_format"):
-        client.edit_image.create(
-            model="qwen-3-edit-image",
-            prompt="edit this",
-            source_image_urls=["https://x/in.jpg"],
-            output_format="webp",
-        )

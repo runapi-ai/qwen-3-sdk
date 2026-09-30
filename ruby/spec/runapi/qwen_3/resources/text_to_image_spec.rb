@@ -21,31 +21,6 @@ RSpec.describe RunApi::Qwen3::Resources::TextToImage do
       expect(result).to be_a(RunApi::Qwen3::Types::TextToImageResponse)
       expect(result.id).to eq("task-1")
     end
-
-    it "raises ValidationError when model is missing" do
-      expect { text_to_image.create(prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of/)
-    end
-
-    it "raises ValidationError when prompt is missing" do
-      expect { text_to_image.create(model: "qwen-3-text-to-image") }
-        .to raise_error(RunApi::Core::ValidationError, /prompt is required/)
-    end
-
-    it "raises ValidationError for invalid model" do
-      expect { text_to_image.create(model: "qwen-3-edit-image", prompt: "test") }
-        .to raise_error(RunApi::Core::ValidationError, /model must be one of/)
-    end
-
-    it "raises ValidationError for invalid aspect_ratio" do
-      expect { text_to_image.create(model: "qwen-3-text-to-image", prompt: "test", aspect_ratio: "square_hd") }
-        .to raise_error(RunApi::Core::ValidationError, /aspect_ratio must be one of/)
-    end
-
-    it "raises ValidationError for invalid output_format" do
-      expect { text_to_image.create(model: "qwen-3-text-to-image", prompt: "test", output_format: "gif") }
-        .to raise_error(RunApi::Core::ValidationError, /output_format must be one of/)
-    end
   end
 
   describe "#get" do
